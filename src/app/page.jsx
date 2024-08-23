@@ -1,5 +1,5 @@
 import { prisma } from "@/libs/prisma";
-
+import TaskCard from "@/components/TaskCard";
 // Función para cargar las tareas desde la base de datos
 async function loadTask() {
   return await prisma.task.findMany();
@@ -13,7 +13,7 @@ async function HomePage() {
     <section className="container mx-auto px-4 py-10">
       {/* Título de la página */}
       <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">
+        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 mb-2">
           Tareas Pendientes
         </h1>
         <p className="text-gray-300">
@@ -25,16 +25,7 @@ async function HomePage() {
       {/* Grid para las tarjetas de tareas */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tasks.map((task) => (
-          <div
-            key={task.id}
-            className="bg-slate-900 p-5 rounded-lg shadow-lg hover:bg-slate-800 hover:cursor-pointer transition-all duration-300"
-          >
-            <h3 className="text-xl font-bold text-white mb-2">{task.title}</h3>
-            <p className="text-gray-400 mb-4">{task.description}</p>
-            <p className="text-gray-500 text-sm">
-              {new Date(task.createdAt).toLocaleDateString()}
-            </p>
-          </div>
+          <TaskCard task={task} key={task.id} />
         ))}
       </div>
     </section>

@@ -1,32 +1,37 @@
 "use client"; // Indica que este componente se ejecuta en el lado del cliente
 
 import { useRouter } from "next/navigation"; // Importa useRouter para manejar la navegación en Next.js
+import { useEffect, useState } from "react";
 
 // Componente NewPage para crear una nueva tarea
-export default function NewPage() {
-  const router = useRouter(); // Hook para manejar la navegación después de enviar el formulario
+export default function NewPage({ params }) {
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  // Función que se ejecuta cuando el formulario se envía
+  useEffect(() => {
+    fetch(`/api/task/${params.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTitle(data.title);
+        setDescription(data.description);
+      });
+  }, []);
+
   const onSubmit = async (e) => {
-    e.preventDefault(); // Previene la recarga de la página al enviar el formulario
+    e.preventDefault();
 
-    // Captura los valores del formulario
-    const title = e.target.title.value;
-    const description = e.target.description.value;
-
-    // Envío de los datos a la API /api/task para crear una nueva tarea en la base de datos
     const res = await fetch("/api/task", {
-      method: "POST", // Indica que es una solicitud POST para crear un nuevo recurso
-      body: JSON.stringify({ title, description }), // Convierte los datos a JSON
+      method: "POST",
+      body: JSON.stringify({ title, description }),
       headers: {
-        "Content-Type": "application/json", // Indica que el contenido es de tipo JSON
+        "Content-Type": "application/json",
       },
     });
 
-    const data = await res.json(); // Recibe la respuesta de la API y la convierte a JSON
-    console.log(data); // Muestra la respuesta en la consola (opcional)
+    const data = await res.json();
+    console.log(data);
 
-    // Navega de vuelta a la página principal una vez que se haya creado la tarea
     router.push("/");
   };
 
@@ -54,6 +59,8 @@ export default function NewPage() {
             id="title"
             className="border border-gray-400 p-2 mb-4 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             placeholder="Título"
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
           />
         </div>
 
@@ -70,6 +77,8 @@ export default function NewPage() {
             id="description"
             className="border border-gray-400 p-2 mb-4 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
             placeholder="Describe tu tarea"
+            onChange={(e) => setDescription(e.target.vale)}
+            value={description}
           ></textarea>
         </div>
 
