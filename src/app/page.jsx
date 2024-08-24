@@ -22,8 +22,8 @@ async function HomePage() {
     <section className="container mx-auto px-4 py-6 min-h-[80vh] flex flex-col">
       <div className="flex-grow">
         {/* Título de la página */}
-        <header className="text-center mb-6">
-          <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 mb-2">
+        <div className="text-center mb-6">
+          <h1 className="text-4xl font-extrabold  text-black mb-2">
             Tareas Pendientes
           </h1>
           <p className="text-gray-400 mb-4">
@@ -38,7 +38,7 @@ async function HomePage() {
             <PlusCircle className="mr-2" size={20} />
             {tasks.length > 0 ? "Crear Nueva Tarea" : "Crear Tu Primera Tarea"}
           </Link>
-        </header>
+        </div>
 
         {/* Grid para las tarjetas de tareas */}
         {tasks.length > 0 ? (
