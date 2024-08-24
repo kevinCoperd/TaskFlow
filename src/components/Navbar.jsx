@@ -1,8 +1,18 @@
-"use client"; // Esto indica que el componente es un Client Component
+"use client";
 
 import Link from "next/link";
 import { useState } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,52 +23,75 @@ export default function Navbar() {
 
   return (
     <nav className="bg-slate-900">
-      <div className="container mx-auto flex justify-between items-center py-3 px-4 relative">
-        <Link href="/">
-          <h3 className="font-bold text-3xl text-white">TaskFlow</h3>
+      <div className="container mx-auto flex justify-between items-center py-3 px-4">
+        <Link href="/" className="font-bold text-3xl text-white">
+          TaskFlow
         </Link>
-        <div className="md:hidden">
-          <button
-            onClick={toggleMenu}
-            className="text-white focus:outline-none"
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden text-white"
+            >
+              <Menu className="h-6 w-6" />
+              <span className="sr-only">Toggle navigation menu</span>
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            side="right"
+            className="w-[300px] bg-slate-900 text-white"
           >
-            {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-          </button>
-        </div>
-        <ul
-          className={`${
-            isOpen ? "block" : "hidden"
-          } md:flex absolute top-full left-0 w-full md:w-auto bg-slate-900 md:bg-transparent py-3 md:py-0 md:mt-0 mt-2 z-10 transition-transform transform ${
-            isOpen
-              ? "translate-y-0 opacity-100"
-              : "translate-y-[-100%] opacity-0"
-          }`}
-        >
-          <li className="text-center">
-            <Link
-              href="/"
-              className="text-white block py-2 px-4 md:inline-block hover:bg-slate-700 rounded-md"
-            >
-              Tareas
-            </Link>
-          </li>
-          <li className="text-center">
-            <Link
-              href="/new"
-              className="text-slate-300 hover:text-slate-200 font-semibold block py-2 px-4 md:inline-block hover:bg-slate-700 rounded-md"
-            >
-              Crear tarea
-            </Link>
-          </li>
-          <li className="text-center">
-            <Link
-              href="/about"
-              className="text-slate-300 hover:text-slate-200 font-semibold block py-2 px-4 md:inline-block hover:bg-slate-700 rounded-md"
-            >
-              Nosotros
-            </Link>
-          </li>
-        </ul>
+            <nav className="flex flex-col space-y-4 mt-4">
+              <Link
+                href="/"
+                className="text-lg font-semibold hover:text-slate-300"
+                onClick={toggleMenu}
+              >
+                Tareas
+              </Link>
+              <Link
+                href="/new"
+                className="text-lg font-semibold hover:text-slate-300"
+                onClick={toggleMenu}
+              >
+                Crear tarea
+              </Link>
+              <Link
+                href="/about"
+                className="text-lg font-semibold hover:text-slate-300"
+                onClick={toggleMenu}
+              >
+                Nosotros
+              </Link>
+            </nav>
+          </SheetContent>
+        </Sheet>
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link href="/" legacyBehavior passHref>
+                <NavigationMenuLink className="text-white font-semibold hover:text-slate-300">
+                  Tareas
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/new" legacyBehavior passHref>
+                <NavigationMenuLink className="text-white font-semibold hover:text-slate-300">
+                  Crear tarea
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/about" legacyBehavior passHref>
+                <NavigationMenuLink className="text-white font-semibold hover:text-slate-300">
+                  Nosotros
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
     </nav>
   );
