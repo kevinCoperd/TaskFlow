@@ -111,6 +111,7 @@ export default function Footer() {
             © {new Date().getFullYear()} TaskFlow. Todos los derechos
             reservados.
           </p>
+          <p className="text-gray-400 text-sm my-3 mx-0">Versión 1.0.0</p>
         </div>
       </div>
     </footer>
