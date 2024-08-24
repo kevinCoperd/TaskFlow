@@ -1,15 +1,15 @@
-"use client"; // Indica que este componente se ejecuta en el lado del cliente
+"use client";
 
-import { useRouter } from "next/navigation"; // Importa useRouter para manejar la navegación en Next.js
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+// Importa iconos desde FontAwesome o un paquete similar
+import { FaTrash, FaSave } from "react-icons/fa";
 
-// Componente NewPage para crear una nueva tarea o actualizar una existente
 export default function NewPage({ params }) {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  // Carga los datos de la tarea si se está editando
   useEffect(() => {
     if (params.id) {
       fetch(`/api/task/${params.id}`)
@@ -19,13 +19,12 @@ export default function NewPage({ params }) {
           setDescription(data.description);
         });
     }
-  }, [params.id]); // Dependencia del id para cargar solo al actualizar
+  }, [params.id]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     if (params.id) {
-      // Si hay un id, actualiza la tarea existente
       const res = await fetch(`/api/task/${params.id}`, {
         method: "PUT",
         body: JSON.stringify({ title, description }),
@@ -36,7 +35,6 @@ export default function NewPage({ params }) {
       const data = await res.json();
       console.log(data);
     } else {
-      // Si no hay un id, crea una nueva tarea
       const res = await fetch("/api/task", {
         method: "POST",
         body: JSON.stringify({ title, description }),
@@ -48,9 +46,18 @@ export default function NewPage({ params }) {
       const data = await res.json();
     }
 
-    // Refresca la página para ver los cambios sin actualizar manualmente
-    router.push("/"); // Redirige a la página principal
-    router.refresh(); // Fuerza un refresco de los datos
+    router.push("/");
+    router.refresh();
+  };
+
+  const onDelete = async () => {
+    if (params.id) {
+      await fetch(`/api/task/${params.id}`, {
+        method: "DELETE",
+      });
+      router.push("/");
+      router.refresh();
+    }
   };
 
   return (
@@ -97,21 +104,26 @@ export default function NewPage({ params }) {
           ></textarea>
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full transition duration-300 ease-in-out"
-        >
-          {params.id ? "Actualizar" : "Crear"}
-        </button>
-
-        {params.id && (
+        <div className="flex justify-between">
           <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded ml-4"
-            type="button"
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 w-full transition duration-300 ease-in-out"
           >
-            Eliminar
+            <FaSave />
+            {params.id ? "Actualizar" : "Crear"}
           </button>
-        )}
+
+          {params.id && (
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 ml-4 transition duration-300 ease-in-out"
+              type="button"
+              onClick={onDelete}
+            >
+              <FaTrash />
+              Eliminar
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
