@@ -26,7 +26,7 @@ async function HomePage() {
           <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 mb-2">
             Tareas Pendientes
           </h1>
-          <p className="text-gray-300 mb-4">
+          <p className="text-gray-400 mb-4">
             {tasks.length > 0
               ? "Aquí puedes visualizar todas las tareas que tienes pendientes. Da clic en cualquier tarea para obtener más detalles."
               : "No tienes tareas pendientes. ¡Comienza creando una nueva tarea!"}
