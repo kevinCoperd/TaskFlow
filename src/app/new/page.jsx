@@ -103,6 +103,15 @@ export default function NewPage({ params }) {
         >
           {params.id ? "Actualizar" : "Crear"}
         </button>
+
+        {params.id && (
+          <button
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded ml-4"
+            type="button"
+          >
+            Eliminar
+          </button>
+        )}
       </form>
     </div>
   );
