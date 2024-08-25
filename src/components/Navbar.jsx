@@ -1,78 +1,99 @@
-"use client"; // Asegura que este componente se ejecute en el cliente, no en el servidor
+"use client"; // Indica que este componente se renderiza en el cliente en una aplicación Next.js.
 
-import Link from "next/link"; // Importa el componente Link de Next.js para navegación
-import { useState } from "react"; // Importa useState de React para manejar el estado del componente
-import { Menu } from "lucide-react"; // Importa el ícono de menú desde lucide-react
+import { useState, useCallback } from "react"; // Importa hooks de React para manejar el estado y las funciones.
+import Link from "next/link"; // Importa el componente Link de Next.js para navegación entre páginas.
+import { Menu } from "lucide-react"; // Importa un icono de menú de la librería lucide-react.
+import { Button } from "@/components/ui/button"; // Importa el componente Button de una ruta personalizada.
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet"; // Importa componentes del sistema de 'hojas' (Sheet) desde otro componente personalizado.
+
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/new", label: "Create Tasks" },
+  { href: "/about", label: "About" },
+]; // Define los elementos de la navegación, con rutas y etiquetas para los enlaces.
 
 export default function Navbar() {
-  // Estado para controlar si el menú desplegable está abierto o cerrado
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Crea un estado local para manejar si el menú desplegable está abierto o cerrado.
 
-  // Array de objetos que define los enlaces de navegación
-  const navItems = [
-    { href: "/", label: "Home" }, // Enlace a la página principal
-    { href: "/new", label: "Create Tasks" }, // Enlace para crear nuevas tareas
-    { href: "/about", label: "About" }, // Enlace a la página "Acerca de"
-  ];
+  const toggleMenu = useCallback(() => {
+    setIsOpen((prev) => !prev);
+  }, []); // Define una función que alterna el estado del menú.
 
   return (
-    <header className="bg-white shadow-sm">
-      {" "}
-      {/* Encabezado con fondo blanco y sombra ligera */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {" "}
-        {/* Contenedor centrado con padding adaptado a distintos tamaños de pantalla */}
-        <div className="flex justify-between items-center py-4">
-          {" "}
-          {/* Contenedor flexible con espacio entre elementos y padding vertical */}
-          <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900">TaskFlow</h1>{" "}
-            {/* Título de la aplicación con estilo */}
-          </div>
-          <nav className="hidden md:flex space-x-4">
-            {" "}
-            {/* Menú de navegación visible solo en pantallas medianas y grandes */}
-            {navItems.map((item) => (
-              <Link
-                key={item.href} // Clave única para cada enlace
-                href={item.href} // Ruta a la que enlaza
-                className="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium" // Estilos del enlace
-              >
-                {item.label} {/* Texto del enlace */}
-              </Link>
-            ))}
-          </nav>
-          <div className="md:hidden">
-            {" "}
-            {/* Contenedor del botón del menú, visible solo en pantallas pequeñas */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)} // Cambia el estado de isMenuOpen al hacer clic
-              className="text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" // Estilos del botón
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* El contenedor principal para la barra de navegación, con clases de Tailwind para el diseño */}
+
+      <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
+        {/* Contenedor para la barra de navegación, con flexbox para alinear los elementos */}
+
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center space-x-2">
+            {/* Logo o nombre de la aplicación con un enlace a la página principal */}
+            <span className="font-bold text-lg">TaskFlow</span>
+          </Link>
+        </div>
+
+        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+          {/* Barra de navegación para pantallas grandes, oculta en móviles */}
+
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
             >
-              <Menu className="h-6 w-6" /> {/* Ícono del menú */}
-            </button>
-          </div>
-        </div>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+          {/* Componente de 'hoja' (Sheet) que contiene el menú para móviles */}
+
+          <SheetTrigger asChild>
+            <Button
+              variant="ghost"
+              className="px-0 text-base hover:bg-transparent focus:ring-0 md:hidden"
+              onClick={toggleMenu}
+            >
+              {/* Botón para abrir/cerrar el menú en móviles */}
+              <Menu className="h-5 w-5" />
+              <span className="sr-only">Toggle Menu</span>
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent side="left" className="pr-0">
+            {/* Contenido del menú que aparece en la 'hoja' desde el lado izquierdo */}
+
+            <div className="flex flex-col h-full">
+              <div className="flex-1">
+                <Link
+                  href="/"
+                  className="flex items-center mb-6"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {/* Logo o nombre de la aplicación dentro del menú móvil */}
+                  <span className="font-bold text-lg">TaskFlow</span>
+                </Link>
+
+                <nav className="flex flex-col space-y-4">
+                  {/* Navegación dentro del menú móvil */}
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="transition-colors hover:text-foreground/80 text-foreground/60"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
-      {/* Menú desplegable para pantallas pequeñas */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {" "}
-            {/* Contenedor del menú con padding y espacio entre elementos */}
-            {navItems.map((item) => (
-              <Link
-                key={item.href} // Clave única para cada enlace
-                href={item.href} // Ruta a la que enlaza
-                className="text-gray-500 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium" // Estilos del enlace
-                onClick={() => setIsMenuOpen(false)} // Cierra el menú al hacer clic en un enlace
-              >
-                {item.label} {/* Texto del enlace */}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
     </header>
   );
 }

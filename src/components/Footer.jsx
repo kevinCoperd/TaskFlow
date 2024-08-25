@@ -1,9 +1,9 @@
-"use client";
+"use client"; // Indica que este código debe ejecutarse en el cliente
 
-import React from "react";
-import Link from "next/link";
+import React from "react"; // Importa React
+import Link from "next/link"; // Importa el componente Link de Next.js para navegación
 import {
-  Heart,
+  Heart, // Importa iconos de lucide-react
   Facebook,
   Instagram,
   Linkedin,
@@ -11,6 +11,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+// Componente Input para renderizar un campo de entrada con estilo
 const Input = React.forwardRef(({ className, type, ...props }, ref) => {
   return (
     <input
@@ -22,8 +23,9 @@ const Input = React.forwardRef(({ className, type, ...props }, ref) => {
   );
 });
 
-Input.displayName = "Input";
+Input.displayName = "Input"; // Nombre para depuración
 
+// Componente Button para renderizar un botón con estilo
 function Button({ className, ...props }) {
   return (
     <button
@@ -33,6 +35,7 @@ function Button({ className, ...props }) {
   );
 }
 
+// Componente XIcon para renderizar un icono SVG de una X
 const XIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -51,6 +54,7 @@ const XIcon = (props) => (
   </svg>
 );
 
+// Componente SocialLink para renderizar un enlace social con icono
 const SocialLink = ({ href, icon: Icon, label }) => (
   <a
     href={href}
@@ -63,6 +67,7 @@ const SocialLink = ({ href, icon: Icon, label }) => (
   </a>
 );
 
+// Componente FooterLink para renderizar un enlace en el pie de página
 const FooterLink = ({ href, children }) => (
   <li>
     <Link
@@ -74,6 +79,7 @@ const FooterLink = ({ href, children }) => (
   </li>
 );
 
+// Componente FooterSection para renderizar una sección en el pie de página
 const FooterSection = ({ title, children }) => (
   <div className="space-y-4">
     <h3 className="text-lg font-semibold text-primary">{title}</h3>
@@ -81,7 +87,9 @@ const FooterSection = ({ title, children }) => (
   </div>
 );
 
+// Componente principal Footer
 export default function Footer() {
+  // Función para desplazar la página hacia arriba
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -90,6 +98,7 @@ export default function Footer() {
     <footer className="bg-gray-50 text-gray-600 border-t">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Sección de información sobre la aplicación */}
           <div className="col-span-1 md:col-span-4 lg:col-span-1">
             <h2 className="text-3xl font-light text-primary mb-4">
               Task<span className="font-black">Flow</span>
@@ -101,6 +110,7 @@ export default function Footer() {
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-primary">Follow Us</h3>
               <div className="flex space-x-2">
+                {/* Enlaces a redes sociales */}
                 <SocialLink
                   href="https://facebook.com"
                   icon={Facebook}
@@ -125,6 +135,7 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Sección de mapa del sitio */}
           <FooterSection title="Sitemap">
             <FooterLink href="/">Home</FooterLink>
             <FooterLink href="/new">Create Task</FooterLink>
@@ -133,11 +144,13 @@ export default function Footer() {
             <FooterLink href="/blog">Blog</FooterLink>
           </FooterSection>
 
+          {/* Sección de comunidad */}
           <FooterSection title="Community">
             <FooterLink href="/forum">Forum</FooterLink>
             <FooterLink href="/support">Support</FooterLink>
           </FooterSection>
 
+          {/* Sección legal */}
           <FooterSection title="Legal">
             <FooterLink href="/privacy">Privacy Policy</FooterLink>
             <FooterLink href="/terms">Terms of Service</FooterLink>
