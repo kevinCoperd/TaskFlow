@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   Heart,
@@ -8,7 +8,7 @@ import {
   Instagram,
   Linkedin,
   ArrowUp,
-  Mail,
+  ArrowRight,
 } from "lucide-react";
 
 const Input = React.forwardRef(({ className, type, ...props }, ref) => {
@@ -82,15 +82,6 @@ const FooterSection = ({ title, children }) => (
 );
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-
-  const handleNewsletterSubmit = (e) => {
-    e.preventDefault();
-    // Handle newsletter subscription logic here
-    console.log("Newsletter subscription submitted with email:", email);
-    setEmail("");
-  };
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -168,16 +159,10 @@ export default function Footer() {
               >
                 Help
               </Link>
-              <p className="text-muted-foreground">
-                123 Main Street, Anytown, USA
-              </p>
+              <p className="text-muted-foreground">Neiva Huila, Colombia</p>
             </div>
             <div className="flex items-center justify-start lg:ml-4">
-              {" "}
-              {/* Comentado la línea modificada */}
               <p className="text-muted-foreground text-sm flex items-center text-left lg:text-left">
-                {" "}
-                {/* Comentado la línea modificada */}
                 Designed and developed with{" "}
                 <Heart className="mx-1 text-red-500 w-4 h-4" />{" "}
                 <a
@@ -206,29 +191,24 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 bg-white p-6 rounded-lg shadow-sm">
-          <h3 className="text-lg font-semibold text-primary mb-4">
-            Subscribe to Our Newsletter
+          <h3 className="text-2xl font-semibold text-primary mb-4">
+            Ready to boost your productivity?
           </h3>
-          <form onSubmit={handleNewsletterSubmit} className="flex space-x-2">
-            <div className="relative flex-grow">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                required
-                className="pr-10"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                aria-label="Email for newsletter"
-              />
-              <Mail className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            </div>
-            <Button type="submit">Subscribe</Button>
-          </form>
+          <p className="text-muted-foreground mb-6">
+            Start organizing your tasks and achieving your goals with TaskFlow
+            today!
+          </p>
+          <Link href="/" passHref>
+            <Button className="w-full sm:w-auto text-lg py-3 px-6">
+              Get Started Now
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="bg-gray-100 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 text-center">
             © {new Date().getFullYear()} TaskFlow. All rights reserved.
           </p>
           <button
