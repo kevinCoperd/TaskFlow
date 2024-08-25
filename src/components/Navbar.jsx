@@ -1,41 +1,40 @@
-"use client"; // Indica que este componente se renderiza en el cliente en una aplicación Next.js.
+// Archivo: Navbar.jsx
 
-import { useState, useCallback } from "react"; // Importa hooks de React para manejar el estado y las funciones.
-import Link from "next/link"; // Importa el componente Link de Next.js para navegación entre páginas.
-import { Menu } from "lucide-react"; // Importa un icono de menú de la librería lucide-react.
-import { Button } from "@/components/ui/button"; // Importa el componente Button de una ruta personalizada.
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet"; // Importa componentes del sistema de 'hojas' (Sheet) desde otro componente personalizado.
+"use client"; // Habilita el modo cliente para este componente
 
+import { useState, useCallback } from "react"; // Importa hooks de React para manejar el estado y funciones
+import Link from "next/link"; // Importa el componente de enlace de Next.js
+import { Menu } from "lucide-react"; // Importa un ícono de menú de la librería lucide-react
+import { Button } from "@/components/ui/button"; // Importa el componente de botón personalizado
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/Sheet"; // Importa componentes de un Sheet personalizado
+
+// Array de objetos que representan los elementos de navegación
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/new", label: "Create Tasks" },
-  { href: "/about", label: "About" },
-]; // Define los elementos de la navegación, con rutas y etiquetas para los enlaces.
+  { href: "/", label: "Home" }, // Página principal
+  { href: "/new", label: "Create Tasks" }, // Página de creación de tareas
+  { href: "/about", label: "About" }, // Página de "Acerca de"
+];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false); // Crea un estado local para manejar si el menú desplegable está abierto o cerrado.
+  const [isOpen, setIsOpen] = useState(false); // Define un estado para controlar si el menú móvil está abierto o cerrado
 
+  // Función para alternar el estado del menú móvil
   const toggleMenu = useCallback(() => {
-    setIsOpen((prev) => !prev);
-  }, []); // Define una función que alterna el estado del menú.
+    setIsOpen((prev) => !prev); // Cambia el estado de `isOpen` al valor opuesto
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      {/* El contenedor principal para la barra de navegación, con clases de Tailwind para el diseño */}
-
+      {/* Contenedor principal de la barra de navegación */}
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
-        {/* Contenedor para la barra de navegación, con flexbox para alinear los elementos */}
-
+        {/* Logo o nombre de la aplicación */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
-            {/* Logo o nombre de la aplicación con un enlace a la página principal */}
             <span className="font-bold text-lg">TaskFlow</span>
           </Link>
         </div>
-
+        {/* Menú de navegación para pantallas grandes */}
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-          {/* Barra de navegación para pantallas grandes, oculta en móviles */}
-
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -46,44 +45,38 @@ export default function Navbar() {
             </Link>
           ))}
         </nav>
-
+        {/* Menú de navegación para pantallas pequeñas, utilizando un Sheet */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          {/* Componente de 'hoja' (Sheet) que contiene el menú para móviles */}
-
           <SheetTrigger asChild>
             <Button
               variant="ghost"
               className="px-0 text-base hover:bg-transparent focus:ring-0 md:hidden"
-              onClick={toggleMenu}
+              onClick={toggleMenu} // Abre o cierra el menú móvil al hacer clic
             >
-              {/* Botón para abrir/cerrar el menú en móviles */}
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle Menu</span>
+              <Menu className="h-5 w-5" /> {/* Ícono de menú */}
+              <span className="sr-only">Toggle Menu</span>{" "}
+              {/* Texto alternativo para accesibilidad */}
             </Button>
           </SheetTrigger>
-
           <SheetContent side="left" className="pr-0">
-            {/* Contenido del menú que aparece en la 'hoja' desde el lado izquierdo */}
-
             <div className="flex flex-col h-full">
               <div className="flex-1">
+                {/* Logo o nombre en el menú móvil */}
                 <Link
                   href="/"
                   className="flex items-center mb-6"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsOpen(false)} // Cierra el menú al hacer clic en el logo
                 >
-                  {/* Logo o nombre de la aplicación dentro del menú móvil */}
                   <span className="font-bold text-lg">TaskFlow</span>
                 </Link>
-
+                {/* Menú de enlaces en el menú móvil */}
                 <nav className="flex flex-col space-y-4">
-                  {/* Navegación dentro del menú móvil */}
                   {navItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
                       className="transition-colors hover:text-foreground/80 text-foreground/60"
-                      onClick={() => setIsOpen(false)}
+                      onClick={() => setIsOpen(false)} // Cierra el menú al hacer clic en un enlace
                     >
                       {item.label}
                     </Link>
