@@ -69,7 +69,9 @@ export default function Navbar() {
                   className="flex items-center mb-6"
                   onClick={() => setIsOpen(false)} // Cierra el menú al hacer clic en el logo
                 >
-                  <span className="font-bold text-lg">TaskFlow</span>
+                  <h2 className="text-2xl font-light text-primary">
+                    Task<span className="font-black">Flow</span>
+                  </h2>
                 </Link>
                 {/* Menú de enlaces en el menú móvil */}
                 <nav className="flex flex-col space-y-4">
