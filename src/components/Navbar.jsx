@@ -30,7 +30,9 @@ export default function Navbar() {
         {/* Logo o nombre de la aplicación */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold text-lg">TaskFlow</span>
+            <h2 className="text-2xl font-light text-primary">
+              Task<span className="font-black">Flow</span>
+            </h2>
           </Link>
         </div>
         {/* Menú de navegación para pantallas grandes */}
