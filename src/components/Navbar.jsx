@@ -11,7 +11,7 @@ export default function Navbar() {
   // Array de objetos que define los enlaces de navegación
   const navItems = [
     { href: "/", label: "Home" }, // Enlace a la página principal
-    { href: "/new", label: "Crear Tareas" }, // Enlace para crear nuevas tareas
+    { href: "/new", label: "Create Tasks" }, // Enlace para crear nuevas tareas
     { href: "/about", label: "About" }, // Enlace a la página "Acerca de"
   ];
 

@@ -24,19 +24,19 @@ async function HomePage() {
         {/* Título de la página */}
         <div className="text-center mb-6">
           <h1 className="text-4xl font-extrabold  text-black mb-2">
-            Tareas Pendientes
+            Pending Tasks
           </h1>
           <p className="text-gray-400 mb-4">
             {tasks.length > 0
-              ? "Aquí puedes visualizar todas las tareas que tienes pendientes. Da clic en cualquier tarea para obtener más detalles."
-              : "No tienes tareas pendientes. ¡Comienza creando una nueva tarea!"}
+              ? "Here you can view all the tasks you have pending. Click on any task to get more details."
+              : "You don't have any pending tasks, start creating a new task!"}
           </p>
           <Link
             href="/new"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
           >
             <PlusCircle className="mr-2" size={20} />
-            {tasks.length > 0 ? "Crear Nueva Tarea" : "Crear Tu Primera Tarea"}
+            {tasks.length > 0 ? "Create New Task" : "Create Your First Task"}
           </Link>
         </div>
 
@@ -50,7 +50,7 @@ async function HomePage() {
         ) : (
           <div className="text-center py-10">
             <p className="text-gray-400 text-xl">
-              ¡Estás al día! No tienes tareas pendientes.
+              ¡Perfect! You have no pending tasks.
             </p>
           </div>
         )}

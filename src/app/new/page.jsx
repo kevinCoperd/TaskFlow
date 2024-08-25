@@ -54,7 +54,7 @@ export default function NewPage({ params }) {
         onSubmit={onSubmit}
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-          {params.id ? "Actualizar Tarea" : "Nueva Tarea"}
+          {params.id ? "Update Task" : "New Task"}
         </h2>
 
         <div className="mb-6">
@@ -62,13 +62,13 @@ export default function NewPage({ params }) {
             htmlFor="title"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Título de la tarea
+            Task title
           </label>
           <input
             type="text"
             id="title"
             className="block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-            placeholder="Título"
+            placeholder="Title"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
@@ -79,13 +79,13 @@ export default function NewPage({ params }) {
             htmlFor="description"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Descripción de la tarea
+            Task description
           </label>
           <textarea
             rows="4"
             id="description"
             className="block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
-            placeholder="Describe tu tarea"
+            placeholder="Describe your task"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           ></textarea>
@@ -97,7 +97,7 @@ export default function NewPage({ params }) {
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 transition duration-300 ease-in-out w-full"
           >
             <FaSave />
-            {params.id ? "Actualizar" : "Crear"}
+            {params.id ? "Update" : "Create"}
           </button>
 
           {params.id && (
@@ -107,7 +107,7 @@ export default function NewPage({ params }) {
               className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md flex items-center justify-center gap-2 transition duration-300 ease-in-out w-full"
             >
               <FaTrash />
-              Eliminar
+              Delete
             </button>
           )}
         </div>

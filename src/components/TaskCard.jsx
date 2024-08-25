@@ -24,8 +24,8 @@ export default function TaskCard({ task }) {
       <div className="flex items-center justify-between mb-4">
         {/* Título de la tarea, que se trunca si es demasiado largo */}
         <h3 className="text-xl md:text-2xl font-bold text-gray-900 truncate">
-          {task.title || "Tarea sin título"}{" "}
-          {/* Si no hay título, muestra "Tarea sin título" */}
+          {task.title || "Untitled task"}{" "}
+          {/* Si no hay título, muestra "Untitled task" */}
         </h3>
         {/* Icono de edición que cambia de color al pasar el ratón */}
         <FaEdit className="text-blue-500 hover:text-blue-700 transition-colors duration-300" />
@@ -43,16 +43,16 @@ export default function TaskCard({ task }) {
           maxHeight: "4.5em", // Establece la altura máxima (3 líneas * 1.5em).
         }}
       >
-        {task.description || "Sin descripción"}{" "}
-        {/* Si no hay descripción, muestra "Sin descripción" */}
+        {task.description || "No description"}{" "}
+        {/* Si no hay descripción, muestra "No description" */}
       </p>
 
       {/* Fecha de creación de la tarea, formateada o "Date unknown" si no está disponible */}
       <p className="text-blue-500 text-sm font-semibold">
         {task.createdAt
           ? new Date(task.createdAt).toLocaleDateString() // Formatea la fecha si existe.
-          : "Fecha desconocida"}{" "}
-        {/* Si no hay fecha, muestra "Fecha desconocida" */}
+          : "Date unknown"}{" "}
+        {/* Si no hay fecha, muestra "Date unknown" */}
       </p>
     </div>
   );
